@@ -1,10 +1,15 @@
 import React, { useContext } from 'react';
-import { combos } from '../../data/mockData';
 import { CartContext } from '../../context/CartContext';
-import { Tag, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Tag, ShoppingBag } from 'lucide-react';
 
-export const ComboDealSection = () => {
+export const ComboDealSection = ({ products = [] }) => {
   const { addToCart } = useContext(CartContext);
+
+  // 1. Filter out only the products where isCombo is true
+  const combos = products.filter(product => product.isCombo === true);
+
+  // 2. If there are no combos, don't show the section at all
+  if (combos.length === 0) return null;
 
   return (
     <section className="py-16 bg-[#1B4332] text-white relative overflow-hidden">
@@ -21,11 +26,10 @@ export const ComboDealSection = () => {
           </p>
         </div>
 
-        {/* 2-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {combos.map(combo => (
+          {combos.map((combo) => (
             <div
-              key={combo.id}
+              key={combo._id}
               className="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-emerald-400/30 hover:border-amber-400/60 transition-all duration-300 flex flex-col sm:flex-row gap-6 shadow-xl group"
             >
               <div className="w-full sm:w-48 h-48 rounded-2xl overflow-hidden relative shrink-0">
@@ -34,9 +38,11 @@ export const ComboDealSection = () => {
                   alt={combo.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-2 left-2 bg-amber-400 text-gray-900 font-extrabold text-xs px-2.5 py-1 rounded-md shadow-md">
-                  SAVE {combo.discountPercent}%
-                </span>
+                {combo.discountPercent > 0 && (
+                  <span className="absolute top-2 left-2 bg-amber-400 text-gray-900 font-extrabold text-xs px-2.5 py-1 rounded-md shadow-md">
+                    SAVE {combo.discountPercent}%
+                  </span>
+                )}
               </div>
 
               <div className="flex-1 flex flex-col justify-between space-y-4">
@@ -52,22 +58,24 @@ export const ComboDealSection = () => {
                 <div className="pt-2 border-t border-emerald-500/30 flex items-center justify-between">
                   <div>
                     <span className="text-2xl font-bold text-amber-300">
-                      ₹{combo.comboPrice}
+                      ₹{combo.price}
                     </span>
-                    <span className="text-xs text-emerald-200 line-through ml-2">
-                      ₹{combo.originalPrice}
-                    </span>
+                    {combo.originalPrice > 0 && (
+                      <span className="text-xs text-emerald-200 line-through ml-2">
+                        ₹{combo.originalPrice}
+                      </span>
+                    )}
                   </div>
 
                   <button
                     onClick={() =>
                       addToCart(
                         {
-                          id: `combo-${combo.id}`,
+                          id: combo._id,
                           name: combo.name,
-                          price: combo.comboPrice,
+                          price: combo.price,
                           originalPrice: combo.originalPrice,
-                          image: combo.image
+                          image: combo.image,
                         },
                         1
                       )

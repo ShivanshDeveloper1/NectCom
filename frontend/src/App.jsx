@@ -25,6 +25,7 @@ import StockPage from './pages/admin/products/StockPage';
 import AdminOrdersPage from './pages/admin/products/AdminOrdersPage';
 import DeleteProductPage from './pages/admin/products/DeleteProductPage';
 import EditProductPage from './pages/admin/products/EditProduct';
+import { ManageVideosPage } from './pages/admin/ManageVideosPage';
 // import logo from '../src/assets/logo.jpeg'
 
 
@@ -58,8 +59,10 @@ export function App() {
                 <Route path="/blogs" element={<BlogListPage />} />
                 <Route path="/blogs/:id" element={<BlogDetailPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
+                
                 <Route path="/admin" element={<AdminLayout />} >
                 <Route index element={<DashboardPage/>} />
+                <Route path="videos" element={<ManageVideosPage />} />
                   <Route path="products/upload" element={<UploadProductPage />} />
   <Route path="products/stock" element={<StockPage />} />
   <Route path="products/delete" element={<DeleteProductPage />} />

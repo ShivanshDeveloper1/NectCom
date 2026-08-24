@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import { concerns, products } from '../../data/mockData';
 import { ProductCard } from '../product/ProductCard';
 import { Sparkles } from 'lucide-react';
 
-export const ShopByConcern = () => {
-  const [activeConcern, setActiveConcern] = useState(concerns[0].name);
+const concernsList = [
+  { id: 1, name: 'Diabetes Care' },
+  { id: 2, name: 'Hair Care' },
+  { id: 3, name: 'Skin Care' },
+  { id: 4, name: 'Digestive Health' },
+  { id: 5, name: 'Immunity' },
+];
 
-  // Filter products matching active concern or fallback to all
-  const filteredProducts = products.filter(
-    p => p.concern === activeConcern || activeConcern === 'All Concerns'
-  );
+export const ShopByConcern = ({ products = [] }) => {
+  const [activeConcern, setActiveConcern] = useState(concernsList[0].name);
+
+  // 1. Ensure products is always a valid array before running .filter()
+  const safeProducts = Array.isArray(products) ? products : [];
+
+  // 2. Case-insensitive filtering matching concern or category
+  const filteredProducts = safeProducts.filter((p) => {
+    const activeLower = activeConcern.toLowerCase();
+    const concernMatch = p?.concern && p.concern.toLowerCase() === activeLower;
+    const categoryMatch = p?.category && p.category.toLowerCase() === activeLower;
+    
+    return concernMatch || categoryMatch;
+  });
 
   return (
     <section className="py-16 bg-white">
@@ -26,9 +40,9 @@ export const ShopByConcern = () => {
           </p>
         </div>
 
-        {/* Pill-style Filter Tabs */}
+        {/* Pill Tabs */}
         <div className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto pb-4 mb-8 no-scrollbar">
-          {concerns.map(c => (
+          {concernsList.map((c) => (
             <button
               key={c.id}
               onClick={() => setActiveConcern(c.name)}
@@ -38,16 +52,23 @@ export const ShopByConcern = () => {
                   : 'bg-emerald-50/50 text-gray-700 border-emerald-100 hover:bg-emerald-100/60'
               }`}
             >
-              <Sparkles className={`w-3.5 h-3.5 ${activeConcern === c.name ? 'text-amber-300' : 'text-emerald-600'}`} />
+              <Sparkles
+                className={`w-3.5 h-3.5 ${
+                  activeConcern === c.name ? 'text-amber-300' : 'text-emerald-600'
+                }`}
+              />
               {c.name}
             </button>
           ))}
         </div>
 
-        {/* Product Cards Row */}
+        {/* Dynamic Product Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {(filteredProducts.length > 0 ? filteredProducts : products.slice(0, 4)).map(p => (
-            <ProductCard key={p.id} product={p} />
+          {(filteredProducts.length > 0
+            ? filteredProducts
+            : safeProducts.slice(0, 4)
+          ).map((p) => (
+            <ProductCard key={p._id || p.id} product={p} />
           ))}
         </div>
       </div>

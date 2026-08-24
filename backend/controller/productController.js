@@ -2,21 +2,49 @@ const Product = require('../models/Product');
 
 const createProduct = async (req, res) => {
   try {
-    const { name, slug, category, price, originalPrice, description, isBestseller, ingredients } = req.body;
+    const { 
+      name, 
+      slug, 
+      category, 
+      price, 
+      originalPrice, 
+      description, 
+      isBestseller, 
+      isCombo, 
+      concern, 
+      ingredients 
+    } = req.body;
 
     const parsedIngredients = typeof ingredients === 'string' 
       ? JSON.parse(ingredients) 
       : ingredients;
 
+    // Calculate discount percentage if original price exists
+    const numPrice = Number(price);
+    const numOriginal = originalPrice ? Number(originalPrice) : 0;
+    const discountPercent = (numOriginal > numPrice && numOriginal > 0)
+      ? Math.round(((numOriginal - numPrice) / numOriginal) * 100)
+      : 0;
+
+    // Handle Cloudinary Image URL from body or req.file
+    const imageUrl = req.body.image || (req.file ? req.file.path : '');
+
+    if (!imageUrl) {
+      return res.status(400).json({ success: false, message: 'Product image is required.' });
+    }
+
     const newProduct = await Product.create({
       name,
       slug,
       category,
-      price: Number(price),
-      originalPrice: originalPrice ? Number(originalPrice) : 0,
+      price: numPrice,
+      originalPrice: numOriginal,
+      discountPercent,
       description,
-      image: req.body.image, // URL populated by Cloudinary middleware
+      image: imageUrl,
       isBestseller: isBestseller === 'true' || isBestseller === true,
+      isCombo: isCombo === 'true' || isCombo === true,
+      concern: concern || '',
       ingredients: parsedIngredients || [],
     });
 
@@ -26,17 +54,27 @@ const createProduct = async (req, res) => {
   }
 };
 
-
-
 // 2. Get All Products
 const getProducts = async (req, res) => {
   try {
 
-    console.log('GET PRODUCTS REQUEST');
+    console.log('\n==============================');
+    console.log('📦 GET PRODUCTS REQUEST');
+
+    console.log('Mongo Ready State:', Product.db.readyState);
+    console.log('Mongo Database:', Product.db.name);
+    console.log('Mongo Host:', Product.db.host);
+    console.log('Product Collection:', Product.collection.name);
 
     const products = await Product.find().sort({ createdAt: -1 });
 
-    console.log('PRODUCT COUNT:', products.length);
+    console.log('✅ PRODUCT COUNT:', products.length);
+
+    if (products.length > 0) {
+      console.log('✅ FIRST PRODUCT:', products[0]);
+    }
+
+    console.log('==============================\n');
 
     res.status(200).json({
       success: true,
@@ -46,7 +84,7 @@ const getProducts = async (req, res) => {
 
   } catch (error) {
 
-    console.error('GET PRODUCTS ERROR:', error);
+    console.error('❌ GET PRODUCTS ERROR:', error);
 
     res.status(500).json({
       success: false,

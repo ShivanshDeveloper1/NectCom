@@ -7,10 +7,12 @@ const { createProduct,
   deleteProduct } = require('../controller/productController');
 const { upload,  processAndUploadImage } = require('../middleware/uploadAndCompress');
 
+
+
 // POST /api/products
 
 console.log('upload:', typeof upload);
-console.log('processAndUploadImage:', typeof processAndUploadImage);
+console.log('processAndUploadImage:', typeof processAndUploadImage);  
 console.log('createProduct:', typeof createProduct);
 
 
@@ -20,4 +22,14 @@ router.post('/', upload.single('imageFile'), processAndUploadImage, createProduc
 router.put('/:id', upload.single('imageFile'), processAndUploadImage, updateProduct);
 router.delete('/:id', deleteProduct);
 
+
+
+
+
+
+
 module.exports = router;
+
+
+
+

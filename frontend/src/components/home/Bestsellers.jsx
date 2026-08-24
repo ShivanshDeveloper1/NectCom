@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { products } from '../../data/mockData';
 import { ProductCard } from '../product/ProductCard';
 import { ChevronLeft, ChevronRight, Award } from 'lucide-react';
 
-export const Bestsellers = () => {
+export const Bestsellers = ({ products = [] }) => {
   const scrollRef = useRef(null);
 
-  const bestsellers = products.filter(p => p.isBestseller);
+  // Filter bestsellers from live DB data
+  const bestsellers = products.filter(p => p.isBestseller === true);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -15,6 +15,8 @@ export const Bestsellers = () => {
       scrollRef.current.scrollTo({ left: scrollLeft + scrollAmount, behavior: 'smooth' });
     }
   };
+
+  const displayProducts = bestsellers.length > 0 ? bestsellers : products;
 
   return (
     <section className="py-16 bg-gradient-to-b from-emerald-50/40 via-white to-emerald-50/20">
@@ -50,13 +52,13 @@ export const Bestsellers = () => {
           </div>
         </div>
 
-        {/* Scrollable Container */}
+        {/* Horizontal Carousel */}
         <div
           ref={scrollRef}
           className="flex space-x-6 overflow-x-auto pb-6 no-scrollbar snap-x snap-mandatory"
         >
-          {bestsellers.map(p => (
-            <div key={p.id} className="w-[280px] sm:w-[320px] shrink-0 snap-start">
+          {displayProducts.map(p => (
+            <div key={p._id || p.id} className="w-[280px] sm:w-[320px] shrink-0 snap-start">
               <ProductCard product={p} />
             </div>
           ))}

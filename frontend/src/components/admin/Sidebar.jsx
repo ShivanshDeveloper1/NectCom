@@ -39,6 +39,13 @@ const Sidebar = ({ onCloseMobile }) => {
 
   }
 
+    const handleVideo = ()=> {
+     setActiveTab('edit-product');
+    navigate('/admin/videos');
+    if (onCloseMobile) onCloseMobile();
+
+  }
+
   return (
     <aside className="h-screen w-64 bg-slate-900 text-white flex flex-col border-r border-slate-800 select-none">
       {/* Brand Header */}
@@ -110,11 +117,11 @@ const Sidebar = ({ onCloseMobile }) => {
               </button>
 
               <button
-                disabled
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all opacity-50 cursor-not-allowed"
+                onClick={handleVideo}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all  cursor-pointer"
               >
                 <PlusCircle className="w-5 h-5 text-emerald-400" />
-                Add New Order
+                Add New Video
               </button>
 
             </div>
@@ -153,7 +160,7 @@ const Sidebar = ({ onCloseMobile }) => {
 
               <button
                onClick={handleEditProduct}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all opacity-50 cursor-not-allowed"
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all  cursor-pointer"
               >
                 <div className="flex items-center gap-3">
                   <Boxes className="w-5 h-5 text-amber-400" />
@@ -167,7 +174,7 @@ const Sidebar = ({ onCloseMobile }) => {
 
               <button
                 onClick={handleDeleteClick}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all opacity-50 cursor-pointer"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all  cursor-pointer"
               >
                 <Trash2 className="w-5 h-5 text-rose-400" />
                 Delete / Remove

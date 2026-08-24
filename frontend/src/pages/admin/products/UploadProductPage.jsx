@@ -3,16 +3,19 @@ import { Leaf, Plus, Trash2, PackagePlus, Check, AlertCircle } from 'lucide-reac
 import { createProduct } from '../../../services/api';
 
 export const UploadProductPage = () => {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     name: '',
     slug: '',
     category: '',
     price: '',
     originalPrice: '',
     description: '',
+    concern: '',
     isBestseller: false,
-  });
+    isCombo: false,
+  };
 
+  const [formData, setFormData] = useState(initialFormState);
   const [selectedFile, setSelectedFile] = useState(null);
   const [ingredients, setIngredients] = useState(['']);
   const [loading, setLoading] = useState(false);
@@ -22,7 +25,7 @@ export const UploadProductPage = () => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => {
       const updated = { ...prev, [name]: type === 'checkbox' ? checked : value };
-      
+
       if (name === 'name') {
         updated.slug = value
           .toLowerCase()
@@ -69,12 +72,12 @@ export const UploadProductPage = () => {
 
     try {
       await createProduct(data);
-      setStatus({ type: 'success', message: 'Product created & image uploaded to Cloudinary!' });
-      setFormData({ name: '', slug: '', category: '', price: '', originalPrice: '', description: '', isBestseller: false });
+      setStatus({ type: 'success', message: 'Product created & image uploaded successfully!' });
+      setFormData(initialFormState);
       setSelectedFile(null);
       setIngredients(['']);
     } catch (err) {
-      console.log('❌ CREATE PRODUCT ERROR:', err);
+      console.error('❌ CREATE PRODUCT ERROR:', err);
       setStatus({ type: 'error', message: err.response?.data?.message || 'Failed to upload product.' });
     } finally {
       setLoading(false);
@@ -84,7 +87,7 @@ export const UploadProductPage = () => {
   return (
     <div className="bg-slate-50 min-h-screen p-4 sm:p-6 lg:p-10">
       <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
-        
+
         {/* Header */}
         <div className="flex items-center justify-between bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-emerald-100 shadow-sm">
           <div>
@@ -108,7 +111,7 @@ export const UploadProductPage = () => {
           </div>
         )}
 
-        {/* Upload Form */}
+        {/* Form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-emerald-100 shadow-sm space-y-6 sm:space-y-8">
           
           {/* Section 1: Basic Info */}
@@ -145,24 +148,38 @@ export const UploadProductPage = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">URL Slug (Auto-generated)</label>
-              <input
-                type="text"
-                name="slug"
-                required
-                placeholder="organic-herbal-tea"
-                value={formData.slug}
-                onChange={handleChange}
-                className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-slate-50 text-gray-600 focus:outline-none focus:border-[#2D6A4F]"
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">Target Concern (Optional)</label>
+                <input
+                  type="text"
+                  name="concern"
+                  placeholder="e.g. Acne, Anti-Aging, Hair Fall"
+                  value={formData.concern}
+                  onChange={handleChange}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#2D6A4F] focus:ring-1 focus:ring-[#2D6A4F]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">URL Slug (Auto-generated)</label>
+                <input
+                  type="text"
+                  name="slug"
+                  required
+                  placeholder="organic-herbal-tea"
+                  value={formData.slug}
+                  onChange={handleChange}
+                  className="w-full text-sm px-4 py-3 rounded-xl border border-gray-200 bg-slate-50 text-gray-600 focus:outline-none focus:border-[#2D6A4F]"
+                />
+              </div>
             </div>
           </div>
 
           {/* Section 2: Pricing & Badges */}
           <div className="space-y-4 pt-4 border-t border-gray-100">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
-              2. Pricing & Highlights
+              2. Pricing & Flags
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -194,17 +211,27 @@ export const UploadProductPage = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 pt-2">
-              <input
-                type="checkbox"
-                id="isBestseller"
-                name="isBestseller"
-                checked={formData.isBestseller}
-                onChange={handleChange}
-                className="w-4 h-4 text-[#2D6A4F] accent-[#2D6A4F] rounded border-gray-300 focus:ring-[#2D6A4F]"
-              />
-              <label htmlFor="isBestseller" className="text-xs font-bold text-gray-800 cursor-pointer">
-                Mark as Bestseller Item
+            <div className="flex flex-wrap items-center gap-6 pt-2">
+              <label className="flex items-center gap-2 text-xs font-bold text-gray-800 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="isBestseller"
+                  checked={formData.isBestseller}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-[#2D6A4F] accent-[#2D6A4F] rounded border-gray-300"
+                />
+                Mark as Bestseller
+              </label>
+
+              <label className="flex items-center gap-2 text-xs font-bold text-gray-800 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="isCombo"
+                  checked={formData.isCombo}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-[#2D6A4F] accent-[#2D6A4F] rounded border-gray-300"
+                />
+                Is Combo Pack
               </label>
             </div>
           </div>
@@ -212,7 +239,7 @@ export const UploadProductPage = () => {
           {/* Section 3: Media & Details */}
           <div className="space-y-4 pt-4 border-t border-gray-100">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block">
-              3. Media & Content
+              3. Media & Details
             </h3>
 
             <div>
@@ -240,7 +267,7 @@ export const UploadProductPage = () => {
             </div>
           </div>
 
-          {/* Section 4: Key Ingredients */}
+          {/* Section 4: Ingredients */}
           <div className="space-y-4 pt-4 border-t border-gray-100">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold uppercase tracking-wider text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
@@ -282,7 +309,7 @@ export const UploadProductPage = () => {
             </div>
           </div>
 
-          {/* Submit Action */}
+          {/* Submit Button */}
           <div className="pt-6 border-t border-gray-100">
             <button
               type="submit"

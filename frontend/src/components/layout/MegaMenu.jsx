@@ -15,7 +15,7 @@ export const MegaMenu = ({ type, onClose }) => {
             {concerns.map(item => (
               <Link
                 key={item.id}
-                to={`/products?concern=${item.id}`}
+                to={`/products`}
                 onClick={onClose}
                 className="group flex items-start p-3 rounded-xl hover:bg-emerald-50/70 transition-all border border-transparent hover:border-emerald-200"
               >
@@ -65,7 +65,7 @@ export const MegaMenu = ({ type, onClose }) => {
           {productCategories.map(cat => (
             <Link
               key={cat.slug}
-              to={`/products?category=${cat.slug}`}
+              to={`/products`}
               onClick={onClose}
               className="group flex items-center p-4 rounded-xl bg-slate-50 hover:bg-emerald-50 transition-all border border-gray-100 hover:border-emerald-200"
             >
