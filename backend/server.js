@@ -9,8 +9,10 @@ const videoRoutes = require('./routes/videoRoutes');
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://frontend-qeyo.onrender.com'
+'http://localhost:5173',
+  'https://frontend-qeyo.onrender.com',
+  'https://uhealthpharma.in',        // Add your live domain
+  'https://www.uhealthpharma.in'     // Add the www version just in case
 ];
 
 app.use(cors({
