@@ -15,7 +15,7 @@ import { CheckoutPage } from './pages/CheckoutPage';
 import { ConsultationPage } from './pages/ConsultationPage';
 import { BlogListPage } from './pages/BlogListPage';
 import { BlogDetailPage } from './pages/BlogDetailPage';
-import { OrdersPage } from './pages/OrdersPage';
+// import { OrdersPage } from './pages/OrdersPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import NavbarProvider from './providers/NavbarProvider';
 import { AdminLayout } from './components/admin/AdminLayout';
@@ -26,6 +26,7 @@ import AdminOrdersPage from './pages/admin/products/AdminOrdersPage';
 import DeleteProductPage from './pages/admin/products/DeleteProductPage';
 import EditProductPage from './pages/admin/products/EditProduct';
 import { ManageVideosPage } from './pages/admin/ManageVideosPage';
+import {OrdersPage} from './pages/admin/products/allOrder';
 // import logo from '../src/assets/logo.jpeg'
 
 
@@ -57,13 +58,13 @@ export function App() {
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/consultation" element={<ConsultationPage />} />
                 <Route path="/blogs" element={<BlogListPage />} />
-                <Route path="/blogs/:id" element={<BlogDetailPage />} />
+                <Route path="/blogs/:id" element={<BlogDetailPage />} />x
                 <Route path="/orders" element={<OrdersPage />} />
-                
                 <Route path="/admin" element={<AdminLayout />} >
                 <Route index element={<DashboardPage/>} />
                 <Route path="videos" element={<ManageVideosPage />} />
                   <Route path="products/upload" element={<UploadProductPage />} />
+                  <Route path ="allorders" element={<OrdersPage />}   />
   <Route path="products/stock" element={<StockPage />} />
   <Route path="products/delete" element={<DeleteProductPage />} />
   <Route path="products/edit" element={<EditProductPage />} />

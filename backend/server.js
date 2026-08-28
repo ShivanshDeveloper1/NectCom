@@ -4,7 +4,8 @@ require('dotenv').config();
 
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
-const videoRoutes = require('./routes/videoRoutes');
+const videoRoutes = require('./routes/videoRoutes')
+const paymentRoutes =  require('./routes/paymentRoutes');
 
 const app = express();
 
@@ -30,6 +31,11 @@ app.use(express.json());
 // API Routes
 app.use('/api/products', productRoutes);
 app.use('/api/videos', videoRoutes);
+
+app.use('/api/orders', require('./routes/orderRoutes'));
+app.use('/api/payment', require('./routes/paymentRoutes'));
+
+app.use('/api/payment', paymentRoutes)
 
 const PORT = process.env.PORT || 5000;
 
