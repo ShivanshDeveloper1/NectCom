@@ -73,7 +73,7 @@ export const CheckoutPage = () => {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_TUiNHmXIGNWwSP',
         amount: amount.toString(),
         currency,
-        name: "Krishna's Herbal & Ayurveda",
+        name: "Uhealthpharma Herbal & Ayurveda",
         description: 'Store Purchase',
         order_id,
         handler: async function (response) {

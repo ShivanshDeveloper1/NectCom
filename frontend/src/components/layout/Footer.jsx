@@ -14,7 +14,7 @@ export const Footer = () => {
                 <Leaf className="w-5 h-5" />
               </div>
               <span className="font-heading text-lg font-bold text-amber-200">
-                Krishna's Herbal
+               Uhealthpharma 
               </span>
             </div>
             <p className="text-xs text-emerald-100/80 leading-relaxed mb-4">
@@ -69,10 +69,10 @@ export const Footer = () => {
             </h4>
             <div className="space-y-2.5 text-xs text-emerald-100/80 mb-4">
               <p className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-amber-400" /> +91 1800-123-HERB
+                <Phone className="w-3.5 h-3.5 text-amber-400" /> +91 8392848912
               </p>
               <p className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-amber-400" /> support@krishnasherbal.com
+                <Mail className="w-3.5 h-3.5 text-amber-400" /> Uhealth25@gmail.com
               </p>
               <p className="flex items-start gap-2">
                 <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> Herbal Park, Rajasthan, India
@@ -115,7 +115,7 @@ export const Footer = () => {
 
         {/* Bottom copyright */}
         <div className="pt-6 text-center text-xs text-emerald-200/70">
-          © {new Date().getFullYear()} Krishna's Herbal & Ayurveda. All rights reserved. Built with React & Node.js.
+          © {new Date().getFullYear()} Uhealthpharma Herbal & Ayurveda. All rights reserved. Built with React & Node.js.
         </div>
       </div>
     </footer>

@@ -156,7 +156,7 @@ export const LoginModal = ({ isOpen, onClose }) => {
           <div className="text-center py-8 space-y-4">
             <CheckCircle2 className="w-16 h-16 text-emerald-600 mx-auto animate-bounce" />
             <h3 className="font-heading text-2xl font-bold text-gray-900">Login Successful!</h3>
-            <p className="text-xs text-gray-500">Welcome to Krishna's Herbal & Ayurveda</p>
+            <p className="text-xs text-gray-500">Welcome to Uhealthpharma Herbal & Ayurveda</p>
           </div>
         )}
       </div>

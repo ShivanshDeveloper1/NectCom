@@ -75,7 +75,7 @@ const DashboardPage = () => {
 
       {/* Footer Watermark */}
       <p className="mt-6 sm:mt-8 text-xs text-slate-600 z-10 text-center">
-        KrishnaAdmin &bull; E-Commerce Platform
+        Uhealthpharma &bull; E-Commerce Platform
       </p>
     </div>
   );

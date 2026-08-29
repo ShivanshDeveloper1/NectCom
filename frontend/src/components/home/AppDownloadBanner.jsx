@@ -11,7 +11,7 @@ export const AppDownloadBanner = () => {
           </span>
 
           <h2 className="font-heading text-3xl sm:text-5xl font-bold leading-tight">
-            Get ₹100 Off Your First Order On Krishna's App
+            Get ₹100 Off Your First Order On Uhealthpharma App
           </h2>
 
           <p className="text-emerald-100 text-sm sm:text-base leading-relaxed">
@@ -54,7 +54,7 @@ export const AppDownloadBanner = () => {
               <div className="w-12 h-12 rounded-full bg-amber-400 text-gray-900 mx-auto flex items-center justify-center font-bold text-lg shadow-md">
                 🌿
               </div>
-              <h4 className="font-heading font-bold text-sm text-white">Krishna's Herbal</h4>
+              <h4 className="font-heading font-bold text-sm text-white">Uhealthpharma</h4>
               <p className="text-[10px] text-emerald-200">100% Authentic Ayurvedic Wellness</p>
               <div className="bg-amber-400 text-gray-900 font-bold text-xs py-2 rounded-xl">
                 Claim ₹100 Coupon
