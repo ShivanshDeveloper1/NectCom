@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, Instagram, Facebook, Youtube, Twitter, Mail, Phone, MapPin, Send } from 'lucide-react';
 
+
 export const Footer = () => {
   return (
     <footer className="bg-[#1B4332] text-white pt-16 pb-8 border-t-4 border-amber-400">
@@ -11,7 +12,7 @@ export const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-9 h-9 rounded-full bg-amber-400 text-gray-900 flex items-center justify-center font-bold">
-                <Leaf className="w-5 h-5" />
+                <img src='/logo.jpeg' className="w-9 h-9" />
               </div>
               <span className="font-heading text-lg font-bold text-amber-200">
                Uhealthpharma 
@@ -69,13 +70,14 @@ export const Footer = () => {
             </h4>
             <div className="space-y-2.5 text-xs text-emerald-100/80 mb-4">
               <p className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-amber-400" /> +91 8392848912
+                <Phone className="w-3.5 h-3.5 text-amber-400" /> +91 8392848912 ,8449472858
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-amber-400" /> Uhealth25@gmail.com
               </p>
               <p className="flex items-start gap-2">
-                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> Herbal Park, Rajasthan, India
+                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />  Gangoh Road, Near Shaan Gym, Saharanpur,
+Saharanpur, Uttar Pradesh, 247001
               </p>
             </div>
           </div>
